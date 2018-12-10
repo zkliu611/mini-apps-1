@@ -20,6 +20,15 @@ var resetGame = function() {
   document.getElementById('20').innerHTML = '_';
   document.getElementById('21').innerHTML = '_';
   document.getElementById('22').innerHTML = '_';
+  colorReset('00');
+  colorReset('01');
+  colorReset('02');
+  colorReset('10');
+  colorReset('11');
+  colorReset('12');
+  colorReset('20');
+  colorReset('21');
+  colorReset('22');
   gameStart();
 }
 
@@ -71,19 +80,61 @@ var toggleArray = function(i, j) {
   } 
 };
 
+var colorRowChange = function(i) {
+  let id1 = i+'0';
+  let id2 = i+'1';
+  let id3 = i+'2';
+
+  let box1 = document.getElementById(id1);
+  let box1Style = box1.style;
+  box1Style.backgroundColor = "#00ff00";
+
+  let box2 = document.getElementById(id2);
+  let box2Style = box2.style;
+  box2Style.backgroundColor = "#00ff00";
+
+  let box3 = document.getElementById(id3);
+  let box3Style = box3.style;
+  box3Style.backgroundColor = "#00ff00";
+}
+
+var colorChange = function(id1, id2, id3) {
+  let box1 = document.getElementById(id1);
+  let box1Style = box1.style;
+  box1Style.backgroundColor = "#00ff00";
+
+  let box2 = document.getElementById(id2);
+  let box2Style = box2.style;
+  box2Style.backgroundColor = "#00ff00";
+
+  let box3 = document.getElementById(id3);
+  let box3Style = box3.style;
+  box3Style.backgroundColor = "#00ff00";
+}
+
+var colorReset = function(id) {
+  let box = document.getElementById(id);
+  let boxStyle = box.style;
+  boxStyle.backgroundColor = "white";
+}
+
 var checkWin = function(player) {
   for (let i = 0; i < 3; i++) {
     if (array[i][0] === player && array[i][1] === player && array[i][2] === player) {
+      colorChange(i+'0', i+'1', i+'2');
       updateWinCount(player);
     }
     if (array[0][i] === player && array[1][i] === player && array[2][i] === player) {
+      colorChange('0'+i, '1'+i, '2'+i);
       updateWinCount(player);
     }
   }
   if (array[0][0] === player && array[1][1] === player && array[2][2] === player) {
+    colorChange('00', '11', '22');
     updateWinCount(player);
   }
   if (array[0][2] === player && array[1][1] === player && array[2][0] === player) {
+    colorChange('02', '11', '20');
     updateWinCount(player);
   }
 }
