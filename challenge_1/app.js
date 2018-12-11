@@ -149,6 +149,11 @@ var colorReset = function(id) {
   boxStyle.backgroundColor = "white";
 }
 
+document.getElementsByClassName('box').addEventListener('click', function(event) {
+  console.log(event);
+})
+
+
 document.getElementById('00').addEventListener('click', function() {
   toggleArray(0, 0);
 })
