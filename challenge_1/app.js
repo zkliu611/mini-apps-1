@@ -2,7 +2,8 @@ var array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 var player1 = window.prompt('Please enter Player 1 Name') || 'X';
 var player2 = window.prompt('Please enter Player 2 Name') || 'O';
 document.getElementById('player').innerHTML = player1;
-var player = 'X';
+var player = player1;
+var box = 'X';
 var winCount = {};
 var winner = null;
 winCount[player1] = 0;
@@ -37,8 +38,67 @@ document.getElementById('btn').addEventListener('click', resetGame)
 document.getElementById('player1').innerHTML = player1 + ' :';
 document.getElementById('player2').innerHTML = player2 + ' :';
 
+var gameStart = function() {
+  if (winner === player1){
+    alert(player2 + ' goes first');
+    document.getElementById('player').innerHTML = player2;
+  } else {
+    alert(player1 + ' goes first');
+    document.getElementById('player').innerHTML = player1;
+  }
+}
+
+var toggleBox = function() {
+  if (box === 'X'){
+    box = 'O';
+  } else {
+    box = 'X';
+  }
+}
+
+var togglePlayer = function() {
+  if (player === player1){
+    player = player2;
+  } else {
+    player = player1;
+  }
+}
+
+var toggleArray = function(i, j) {
+  if (array[i][j] === 0) {
+    let id = String(i) + String(j);
+    document.getElementById(id).innerHTML = box;
+    array[i][j] = player;
+    checkWin(player);
+    togglePlayer();
+    toggleBox();
+    document.getElementById('player').innerHTML = player;
+  } 
+};
+
+var checkWin = function(player) {
+  for (let i = 0; i < 3; i++) {
+    if (array[i][0] === player && array[i][1] === player && array[i][2] === player) {
+      colorChange(i+'0', i+'1', i+'2');
+      updateWinCount(player);
+    }
+    if (array[0][i] === player && array[1][i] === player && array[2][i] === player) {
+      colorChange('0'+i, '1'+i, '2'+i);
+      updateWinCount(player);
+    }
+  }
+  if (array[0][0] === player && array[1][1] === player && array[2][2] === player) {
+    colorChange('00', '11', '22');
+    updateWinCount(player);
+  }
+  if (array[0][2] === player && array[1][1] === player && array[2][0] === player) {
+    colorChange('02', '11', '20');
+    updateWinCount(player);
+  }
+};
+
 var updateWinCount = function(player) {
-  if (player === 'X') {
+  if (box === 'X') {
     player = player1;
   } else {
     player = player2;
@@ -50,35 +110,6 @@ var updateWinCount = function(player) {
   document.getElementById('ocount').innerHTML = winCount[player2];
 }
 
-var gameStart = function() {
-  if (winner === player1){
-    alert(player2 + ' goes first');
-    document.getElementById('player').innerHTML = player2;
-  } else {
-    alert(player1 + ' goes first');
-    document.getElementById('player').innerHTML = player1;
-  }
-}
-
-var togglePlayer = function() {
-  if (player === 'X'){
-    player = 'O';
-  } else {
-    player = 'X';
-  }
-}
-
-var toggleArray = function(i, j) {
-  if (array[i][j] === 0) {
-    let id = String(i) + String(j);
-    document.getElementById(id).innerHTML = player;
-    // document.getElementById(id).css(background-color: 
-    array[i][j] = player;
-    checkWin(player);
-    togglePlayer();
-    document.getElementById('player').innerHTML = player1;
-  } 
-};
 
 var colorRowChange = function(i) {
   let id1 = i+'0';
@@ -117,28 +148,6 @@ var colorReset = function(id) {
   let boxStyle = box.style;
   boxStyle.backgroundColor = "white";
 }
-
-var checkWin = function(player) {
-  for (let i = 0; i < 3; i++) {
-    if (array[i][0] === player && array[i][1] === player && array[i][2] === player) {
-      colorChange(i+'0', i+'1', i+'2');
-      updateWinCount(player);
-    }
-    if (array[0][i] === player && array[1][i] === player && array[2][i] === player) {
-      colorChange('0'+i, '1'+i, '2'+i);
-      updateWinCount(player);
-    }
-  }
-  if (array[0][0] === player && array[1][1] === player && array[2][2] === player) {
-    colorChange('00', '11', '22');
-    updateWinCount(player);
-  }
-  if (array[0][2] === player && array[1][1] === player && array[2][0] === player) {
-    colorChange('02', '11', '20');
-    updateWinCount(player);
-  }
-}
-
 
 document.getElementById('00').addEventListener('click', function() {
   toggleArray(0, 0);
