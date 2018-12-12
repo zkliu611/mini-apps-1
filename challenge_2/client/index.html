@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CVS Report</title>
+  <title>CSV Report</title>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-  <h1> CVS Report </h1>
+  <h1> CSV Report </h1>
 
-  <form method="POST" action="/cvs">
+  <form method="post" action="/csv">
 
-    First Name:
-    <input type="text" id="first-name" placeholder="enter First Name">
+<!--     First Name:
+    <input type="text" id="first-name" name="firstName" placeholder="enter First Name">
     <br>
     Last Name:
-    <input type="text" id="last-name" placeholder="enter Last Name">
+    <input type="text" id="last-name" name="lastName" placeholder="enter Last Name">
     <br>
     County:
-    <input type="text" id="county" placeholder="enter County">
+    <input type="text" id="county" name="county" placeholder="enter County">
     <br>
     City:
-    <input type="text" id="city" placeholder="enter City">
+    <input type="text" id="city" name="city" placeholder="enter City">
     <br>
     Role:
-    <input type="text" id="role" placeholder="enter Person's Role">
+    <input type="text" id="role" name="role" placeholder="enter Person's Role">
     <br>
     Sales:
-    <input type="text" id="sales" placeholder="enter Sales">
+    <input type="text" id="sales" name="sales" placeholder="enter Sales">
     <br>
     Children:
-    <input type="text" id="children" placeholder="enter Children">
-    <br>
+    <input type="text" id="children" name="children" placeholder="enter Children">
+    <br> -->
+
+    Data:
+    <textarea name="formData"></textarea>
     <input type="submit" value="Submit">
 
   </form>
