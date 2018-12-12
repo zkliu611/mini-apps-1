@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var parseData = require('./parse');
+const fs = require('fs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -14,6 +15,13 @@ app.post('/csv', (req, res) => {
   var flattenData = parseData.createArray(rawData);
   var csvData = parseData.createCSV(flattenData);
   var csvHTTP = parseData.createHTTP(csvData);
+  fs.writeFile('client/download/csvReport.csv', csvData, (error) => {
+    if (error){
+      console.log('cannot write file')
+      throw error;
+    } 
+    console.log('File saved')
+  })
   res.status(201).send(csvHTTP);
 });
 

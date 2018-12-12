@@ -42,6 +42,7 @@ exports.createHTTP = (data) => {
     <br>
     <input type="submit" value="Submit">
   </form>
+  <a href="/download/csvReport.csv" download>Download CSV Report</a>
   <div id="csv">
     ${data}
   </div>
