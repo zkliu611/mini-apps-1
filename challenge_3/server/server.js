@@ -11,7 +11,7 @@ app.use(express.static(path.join(__dirname, './../public')));
 app.post('/', (req, res) => {
   console.log('serving post request');
   if (req.body.page === 4) {
-    controllers.addData(req.body.data)
+    controller.addData(req.body.data)
   }
   res.status(201).end();
 })

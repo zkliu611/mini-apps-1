@@ -4,17 +4,17 @@ class App extends React.Component {
     this.state = {
       page: 0,
       formData: { //hard coded data for testing purpose
-        name: "zk", 
-        email: "zk@HR.com", 
-        password: "dkjsdfks", 
-        address1: "44 tehama St", 
-        city: "SF", 
-        state: "CA",
-        zipCode: 94105,
-        creditCard: 1234123412341234,
-        expiration:121218,
-        cvv: 342,
-        billingZipCode: 94104
+        // name: "zk", 
+        // email: "zk@HR.com", 
+        // password: "dkjsdfks", 
+        // address1: "44 tehama St", 
+        // city: "SF", 
+        // state: "CA",
+        // zipCode: 94105,
+        // creditCard: 1234123412341234,
+        // expiration:121218,
+        // cvv: 342,
+        // billingZipCode: 94104
       }
     }
   }
@@ -65,7 +65,7 @@ class App extends React.Component {
       body: JSON.stringify(data),
     })
       .then(() => {
-        alert('Order Complete! Thank you for your business!')
+        console.log('data sent')
       })
   }
  
@@ -214,5 +214,3 @@ var Form4 = ({nextPage, data, back}) => {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-//mysql.server start to start mysql server
