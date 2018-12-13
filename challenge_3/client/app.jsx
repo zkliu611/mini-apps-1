@@ -3,7 +3,19 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 0,
-      formData: {}
+      formData: {
+        name: "zk", 
+        email: "zk@HR.com", 
+        password: "dkjsdfks", 
+        address1: "44 tehama St", 
+        city: "SF", 
+        state: "CA",
+        zipCode: 94105,
+        creditCard: 1234123412341234,
+        expiration:121218,
+        cvv: 342,
+        billingZipCode: 94104
+      }
     }
   }
 
@@ -26,7 +38,6 @@ class App extends React.Component {
     this.setState({
       formData: data
     });
-    console.log(this.state.formData)
   }
 
   sendData () {
@@ -48,7 +59,7 @@ class App extends React.Component {
       return (<Form3 nextPage={this.nextPage.bind(this)} inputData={this.inputData.bind(this)}/>);
     }
      if (this.state.page === 4){
-      return (<Form4 nextPage={this.nextPage.bind(this)} inputData={this.inputData.bind(this)}/>);
+      return (<Form4 nextPage={this.nextPage.bind(this)} data={this.state.formData}/>);
     }
   }
 
@@ -62,10 +73,15 @@ var FrontPage = ({nextPage}) => {
       <br></br>
       <div> Items in your cart</div>
       <ul>
-        <li>Coffee</li>
-        <li>Tea</li>
-        <li>Milk</li>
+        <li>Coffee, Qtn: 1, $10</li>
+        <li>Tea, Qtn: 1, $8 </li>
+        <li>Milk, Qtn: 1, $7</li>
       </ul>
+      <br/>
+      <span> Tax $2.19</span>
+      <br/><br/>
+      <span> Order Total $27.19</span>
+      <br/><br/><br/>
       <button onClick={(event) => nextPage(event)}> Check Out </button>
     </div>
     );
@@ -106,7 +122,7 @@ var Form2 = ({nextPage, inputData}) => {
       <input type="text" id="state" placeholder="State" onChange={(event) => inputData(event)}/>
       <br/>
       <label>Zip Code </label>
-      <input type="text" id="zipcode" placeholder="ZIP Code" onChange={(event) => inputData(event)}/>
+      <input type="text" id="zipCode" placeholder="ZIP Code" onChange={(event) => inputData(event)}/>
       <br/><br/>
       <button onClick={(event) => nextPage(event)}> Next </button>
     </div>
@@ -127,19 +143,44 @@ var Form3 = ({nextPage, inputData}) => {
       <input type="text" id="cvv" placeholder="3 Digits CVV" onChange={(event) => inputData(event)}/>
       <br/>
       <label>Billing Zip Code </label>
-      <input type="text" id="billing" placeholder="Billing ZIP Code" onChange={(event) => inputData(event)}/>
+      <input type="text" id="billingZipCode" placeholder="Billing ZIP Code" onChange={(event) => inputData(event)}/>
       <br/><br/>
       <button onClick={(event) => nextPage(event)}> Next </button>
     </div>
   );
 }
 
-var Form4 = ({nextPage}) => {
+var Form4 = ({nextPage, data}) => {
+  console.log(data);
+  var hideCredit = '************' + String(data.creditCard).slice(-4);
+  console.log(hideCredit)
+  // hideCredit = hideCredit.slice(-4); 
   return (
     <div>
       <h3>Please Verify Your Information and Click Complete Order</h3>
-      
+      <span> Customer Name : {data.name}</span><br/>
+      <span> email : {data.email}</span><br/>
+      <span> Address Line 1: {data.address1}</span><br/>
+      <span> Address Line 2 : {data.address2}</span><br/>
+      <span> City : {data.city}</span><br/>
+      <span> State : {data.state}</span><br/>
+      <span> Zip Code : {data.zipCode}</span><br/>
+      <span> Credit Card #: {hideCredit} </span><br/>
+      <span> Expiration Date: {data.expiration}</span><br/>
+      <span> CVV # : {data.cvv}</span><br/>
+      <span> Billing Zip Code : {data.billingZipCode}</span><br/>
       <br/><br/>
+      <div> Order Summary</div>
+      <ul>
+        <li>Coffee, Qtn: 1, $10</li>
+        <li>Tea, Qtn: 1, $8 </li>
+        <li>Milk, Qtn: 1, $7</li>
+      </ul>
+      <br/>
+      <span> Tax $2.19</span>
+      <br/><br/>
+      <span> Order Total $27.19</span>
+      <br/><br/><br/>
       <button onClick={(event) => nextPage(event)}> Complete Order </button>
     </div>
   );
