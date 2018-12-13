@@ -3,7 +3,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       page: 0,
-      formData: {
+      formData: { //hard coded data for testing purpose
         name: "zk", 
         email: "zk@HR.com", 
         password: "dkjsdfks", 
@@ -19,12 +19,26 @@ class App extends React.Component {
     }
   }
 
-  nextPage () {
+  nextPage() {
     var pageIndex = this.state.page;
+    if (pageIndex > 0){
+      this.sendData();
+    }
     pageIndex ++;
     if (pageIndex > 4){
       pageIndex = 0;
+      this.setState({
+        formData: {}
+      });
     }
+    this.setState({
+      page: pageIndex
+    });
+  }
+
+  prevPage() {
+    var pageIndex = this.state.page;
+    pageIndex--;
     this.setState({
       page: pageIndex
     });
@@ -40,8 +54,19 @@ class App extends React.Component {
     });
   }
 
-  sendData () {
-
+  sendData() {
+    var data = {
+      page: this.state.page,
+      data: this.state.formData
+    }
+    fetch('/', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json; charset=utf-8'},
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        alert('Order Complete! Thank you for your business!')
+      })
   }
  
 
@@ -50,16 +75,16 @@ class App extends React.Component {
       return (<FrontPage nextPage={this.nextPage.bind(this)}/>);
     }
     if (this.state.page === 1){
-      return (<Form1 nextPage={this.nextPage.bind(this)} inputData={this.inputData.bind(this)}/>);
+      return (<Form1 nextPage={this.nextPage.bind(this)} back={this.prevPage.bind(this)} inputData={this.inputData.bind(this)}/>);
     }
      if (this.state.page === 2){
-      return (<Form2 nextPage={this.nextPage.bind(this)} inputData={this.inputData.bind(this)}/>);
+      return (<Form2 nextPage={this.nextPage.bind(this)} back={this.prevPage.bind(this)} inputData={this.inputData.bind(this)}/>);
     }
      if (this.state.page === 3){
-      return (<Form3 nextPage={this.nextPage.bind(this)} inputData={this.inputData.bind(this)}/>);
+      return (<Form3 nextPage={this.nextPage.bind(this)} back={this.prevPage.bind(this)} inputData={this.inputData.bind(this)}/>);
     }
      if (this.state.page === 4){
-      return (<Form4 nextPage={this.nextPage.bind(this)} data={this.state.formData}/>);
+      return (<Form4 nextPage={this.nextPage.bind(this)} back={this.prevPage.bind(this)} data={this.state.formData}/>);
     }
   }
 
@@ -87,7 +112,7 @@ var FrontPage = ({nextPage}) => {
     );
 }
 
-var Form1 = ({nextPage, inputData}) => {
+var Form1 = ({nextPage, inputData, back}) => {
   return (
     <div>
       <h3>Please Enter Your Name and Login Info</h3>
@@ -100,12 +125,13 @@ var Form1 = ({nextPage, inputData}) => {
       <label>Password </label>
       <input type="text" id="password" placeholder="Please Enter Password" onChange={(event) => inputData(event)}/>
       <br/><br/>
+      <button onClick={(event) => back(event)}> Back </button>
       <button onClick={(event) => nextPage(event)}> Next </button>
     </div>
     );
 }
 
-var Form2 = ({nextPage, inputData}) => {
+var Form2 = ({nextPage, inputData, back}) => {
   return (
     <div>
       <h3>Please Enter Your Shipping Info</h3>
@@ -124,12 +150,13 @@ var Form2 = ({nextPage, inputData}) => {
       <label>Zip Code </label>
       <input type="text" id="zipCode" placeholder="ZIP Code" onChange={(event) => inputData(event)}/>
       <br/><br/>
+      <button onClick={(event) => back(event)}> Back </button>
       <button onClick={(event) => nextPage(event)}> Next </button>
     </div>
   );
 }
 
-var Form3 = ({nextPage, inputData}) => {
+var Form3 = ({nextPage, inputData, back}) => {
   return (
     <div>
       <h3>Please Enter Your Payment Info</h3>
@@ -145,16 +172,15 @@ var Form3 = ({nextPage, inputData}) => {
       <label>Billing Zip Code </label>
       <input type="text" id="billingZipCode" placeholder="Billing ZIP Code" onChange={(event) => inputData(event)}/>
       <br/><br/>
+      <button onClick={(event) => back(event)}> Back </button>
       <button onClick={(event) => nextPage(event)}> Next </button>
     </div>
   );
 }
 
-var Form4 = ({nextPage, data}) => {
+var Form4 = ({nextPage, data, back}) => {
   console.log(data);
   var hideCredit = '************' + String(data.creditCard).slice(-4);
-  console.log(hideCredit)
-  // hideCredit = hideCredit.slice(-4); 
   return (
     <div>
       <h3>Please Verify Your Information and Click Complete Order</h3>
@@ -181,13 +207,11 @@ var Form4 = ({nextPage, data}) => {
       <br/><br/>
       <span> Order Total $27.19</span>
       <br/><br/><br/>
+      <button onClick={(event) => back(event)}> Back </button>
       <button onClick={(event) => nextPage(event)}> Complete Order </button>
     </div>
   );
 }
-
-
-
 
 ReactDOM.render(<App />, document.getElementById('app'));
 
