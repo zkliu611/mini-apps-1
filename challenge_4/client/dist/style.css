@@ -1,0 +1,15 @@
+.column {
+  display: inline-flex;
+  flex-direction: row;
+  vertical-align: top;
+}
+
+.box {
+  height: 80px;
+  width: 80px;
+  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-color: blue;
+}

@@ -2,12 +2,10 @@ import React from 'react';
 
 var Box = () => {
   return (
-    <div>
-      hello from boxes
+    <div className='box'>
+      
     </div>
     )
 }
-
-
 
 export default Box;
